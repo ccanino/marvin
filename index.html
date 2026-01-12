@@ -30,18 +30,22 @@
             align-items: center;
             padding: 20px;
             flex-shrink: 0;
+            gap: 15px;
         }
 
         .logo-container {
             display: flex;
             justify-content: flex-start;
-            flex: 1;
+            align-items: center;
+            flex: 0 1 auto;
+            min-width: 0;
         }
 
         .logo {
             width: 100%;
             max-width: 200px;
             height: auto;
+            display: block;
         }
 
         .reserved-area-btn {
@@ -58,6 +62,7 @@
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             font-family: 'Arial', sans-serif;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .reserved-area-btn:hover {
@@ -119,15 +124,16 @@
         @media (max-width: 640px) {
             .header {
                 padding: 15px;
+                gap: 10px;
             }
 
             .reserved-area-btn {
-                padding: 7px 14px;
-                font-size: 0.8em;
+                padding: 7px 12px;
+                font-size: 0.75em;
             }
 
             .logo {
-                max-width: 160px;
+                max-width: 140px;
             }
 
             .welcome-text {
@@ -138,25 +144,17 @@
 
         @media (max-width: 375px) {
             .header {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
                 padding: 12px;
-            }
-
-            .logo-container {
-                width: 100%;
-                justify-content: center;
+                gap: 8px;
             }
 
             .reserved-area-btn {
-                padding: 6px 12px;
-                font-size: 0.75em;
-                align-self: flex-end;
+                padding: 6px 10px;
+                font-size: 0.7em;
             }
 
             .logo {
-                max-width: 140px;
+                max-width: 120px;
             }
 
             .welcome-text {
@@ -189,7 +187,7 @@
 
     <div class="main-content">
         <div class="welcome-text">
-            Benvenuto nel sito di Marvin Packaging. Accedi per sfogliare il nostro catalogo.
+            Benvenuto nel sito di Marvin Packaging. Accedi all'area riservata per sfogliare il nostro catalogo.
         </div>
     </div>
 

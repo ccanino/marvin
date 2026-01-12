@@ -19,33 +19,6 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            position: relative;
-        }
-
-        .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #000000;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .back-button:hover {
-            background-color: #333333;
-            transform: scale(1.03);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
 
         .login-container {
@@ -168,6 +141,30 @@
             transform: none;
         }
 
+        .back-button {
+            width: 100%;
+            padding: 14px;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 12px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .back-button:hover {
+            background-color: #333333;
+            transform: scale(1.03);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
         .password-toggle {
             position: relative;
         }
@@ -189,13 +186,6 @@
 
             h2 {
                 font-size: 1.25rem;
-            }
-
-            .back-button {
-                top: 15px;
-                left: 15px;
-                padding: 8px 14px;
-                font-size: 0.85rem;
             }
         }
     </style>
@@ -253,9 +243,9 @@
         // ⚠️ CONFIGURAZIONE CREDENZIALI
         // Aggiungi qui gli account dei negozi (username: password)
         const CREDENTIALS = {
-            'Negozio1': 'Negozio1',
-            'Negozio2': 'Negozio2',
-            'Negozio3': 'Negozio3'
+            'Negozio Roma': 'R0m@2024!Secure',
+            'Shop Milano': 'M1l@n0#2024!',
+            'Store Napoli': 'N@p0li$2024!'
         };
 
         const loginForm = document.getElementById('loginForm');

@@ -232,7 +232,7 @@
             <button type="submit" class="login-button" id="loginButton">
                 Accedi
             </button>
-            <button type="submit" class="back-button" id="backButton">
+            <a href="index.html" class="back-button" id="backButton">
                 Indietro
             </a>
         </form>
@@ -253,7 +253,7 @@
         const errorMessage = document.getElementById('errorMessage');
         const loginButton = document.getElementById('loginButton');
         const togglePassword = document.getElementById('togglePassword');
-
+        
         // Toggle visualizzazione password
         togglePassword.addEventListener('click', () => {
             const type = passwordInput.type === 'password' ? 'text' : 'password';

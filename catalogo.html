@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Prodotti</title>
+    <style>
+        :root {
+            --primary-color: #10b981;
+            --primary-hover: #059669;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 16px 20px;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .product-list {
+            display: grid;
+            gap: 12px;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        .product-card {
+            background-color: var(--card-background);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .product-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .format-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 2px 8px;
+            background-color: var(--background-color);
+            border-radius: 4px;
+        }
+
+        .product-controls {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        select {
+            padding: 6px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 13px;
+            width: 100px;
+            background-color: var(--card-background);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .color-select, .plastificazione-select {
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: var(--card-background);
+            width: 90px;
+            height: 28px;
+        }
+
+        .quantity-btn {
+            background-color: var(--card-background);
+            border: none;
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .quantity-input {
+            width: 34px;
+            height: 28px;
+            text-align: center;
+            border: none;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            padding: 0;
+            font-size: 13px;
+            color: var(--text-primary);
+            background-color: var(--card-background);
+        }
+
+        .product-price-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+            margin-left: auto;
+            min-width: 100px;
+        }
+
+        .pezzi-collo {
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .unit-price {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .product-total {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .order-button, .reset-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 48px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-sizing: border-box;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            gap: 12px;
+        }
+
+        .order-button:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .order-button:disabled {
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .order-button-total {
+            padding-left: 12px;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 25%;
+            max-width: 250px;
+            height: auto;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .shop-name {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background-color: #000000;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .logout-btn:hover {
+            background-color: #333333;
+            transform: scale(1.03);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 8px;
+            max-width: 700px;
+            margin: 0 auto 12px;
+            padding: 0 8px;
+        }
+
+        .buttons-container.bottom {
+            margin-top: 24px;
+        }
+
+        .reset-button {
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            min-width: 100px;
+        }
+
+        .reset-button:hover {
+            background-color: var(--border-color);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .alert {
+            max-width: 700px;
+            margin: 12px auto;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert.success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .alert.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 640px) {
+            .logo { width: 35%; }
+            
+            .logo-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .user-info {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .shop-name {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .logo { width: 45%; }
+            
+            .shop-name {
+                font-size: 0.8rem;
+            }
+
+            .logout-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .product-controls {
+                flex-direction: column;
+                gap: 8px;
+                align-items: stretch;
+            }
+            select {
+                width: 100%;
+                height: 40px;
+            }
+            .quantity-controls {
+                width: 100%;
+                height: 40px;
+            }
+            .quantity-btn {
+                width: 40px;
+                height: 40px;
+            }
+            .quantity-input {
+                flex: 1;
+                height: 40px;
+                font-size: 16px;
+            }
+            .product-price-container {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-top: 8px;
+                padding-top: 8px;
+                border-top: 1px solid var(--border-color);
+            }
+            .logo { width: 45%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="logo.png" alt="Marvin Packaging" class="logo">
+        <div class="user-info">
+            <span class="shop-name" id="shopNameDisplay"></span>
+            <button class="logout-btn" id="logoutBtn">Esci</button>
+        </div>
+    </div>
+
+    <div id="alertContainer"></div>
+
+    <div class="buttons-container">
+        <button class="order-button" id="orderButton" disabled style="flex: 1">
+            Invia Ordine
+            <span class="order-button-total">€0.00</span>
+        </button>
+        <button class="reset-button" id="resetButton">Reset</button>
+    </div>
+    
+    <div class="product-list" id="productList"></div>
+    
+    <div class="buttons-container bottom">
+        <button class="order-button" id="orderButtonBottom" disabled style="flex: 1">
+            Invia Ordine
+            <span class="order-button-total">€0.00</span>
+        </button>
+        <button class="reset-button" id="resetButtonBottom">Reset</button>
+    </div>
+
+    <script>
+        // ⚠️ CONTROLLO AUTENTICAZIONE
+        if (sessionStorage.getItem('authenticated') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        const shopName = sessionStorage.getItem('shopName') || 'Negozio Sconosciuto';
+
+        // ⚠️ CONFIGURAZIONE WEB3FORMS
+        // Vai su web3forms.com, ottieni la tua Access Key gratuita
+        const WEB3FORMS_ACCESS_KEY = 'TUA_ACCESS_KEY_QUI';
+        const RECIPIENT_EMAIL = 'info@marvinpackaging.it';
+
+        const products = [
+            { name: "23 + 10 X 20 + 5", basePrice: 0.34, pezziCollo: "100 PZ" },
+            { name: "32 + 10 X 27 + 5", basePrice: 0.46, pezziCollo: "100 PZ" },
+            { name: "42 + 13 X 36 + 6", basePrice: 0.66, pezziCollo: "100 PZ" },
+            { name: "54 + 14 X 45 + 6", basePrice: 0.85, pezziCollo: "50 PZ" },
+            { name: "23 + 10 X 20 + 5", basePrice: 0.36, pezziCollo: "100 PZ" },
+            { name: "32 + 10 X 27 + 5", basePrice: 0.48, pezziCollo: "100 PZ" },
+            { name: "42 + 13 X 36 + 6", basePrice: 0.68, pezziCollo: "50 PZ" },
+            { name: "54 + 14 X 45 + 6", basePrice: 0.88, pezziCollo: "50 PZ" },
+            { name: "23 + 10 X 20 + 5", basePrice: 0.38, pezziCollo: "100 PZ" },
+            { name: "32 + 10 X 27 + 5", basePrice: 0.50, pezziCollo: "100 PZ" },
+            { name: "42 + 13 X 36 + 6", basePrice: 0.70, pezziCollo: "100 PZ" },
+            { name: "54 + 14 X 45 + 6", basePrice: 0.93, pezziCollo: "50 PZ" },
+            { name: "23 + 10 X 20 + 5", basePrice: 0.38, pezziCollo: "100 PZ" },
+            { name: "32 + 10 X 27 + 5", basePrice: 0.50, pezziCollo: "100 PZ" },
+            { name: "42 + 13 X 36 + 6", basePrice: 0.70, pezziCollo: "50 PZ" },
+            { name: "54 + 14 X 45 + 6", basePrice: 0.93, pezziCollo: "50 PZ" }
+        ];
+
+        const colors = ["BIANCO", "NERO", "TORTORA"];
+        const plastificazione = ["LUCIDA", "OPACA"];
+
+        function showAlert(message, type) {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert ${type} show`;
+            alert.textContent = message;
+            container.innerHTML = '';
+            container.appendChild(alert);
+            setTimeout(() => {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 300);
+            }, 5000);
+        }
+
+        function getPezziColloNumber(pezziColloString) {
+            return parseInt(pezziColloString.split(' ')[0]);
+        }
+
+        function getAdjustedPrice(basePrice, color, plastificazione) {
+            let price = basePrice;
+            if (color === "NERO" || color === "TORTORA") price += 0.04;
+            if (plastificazione === "OPACA") price += 0.02;
+            return price;
+        }
+
+        function updateProductTotal(quantityInput, product) {
+            const quantity = parseInt(quantityInput.value) || 0;
+            const card = quantityInput.closest('.product-card');
+            const selectedColor = card.querySelector('.color-select').value;
+            const selectedPlastificazione = card.querySelector('.plastificazione-select').value;
+            const adjustedPrice = getAdjustedPrice(product.basePrice, selectedColor, selectedPlastificazione);
+            const pezziCollo = getPezziColloNumber(product.pezziCollo);
+            const productTotal = quantity * adjustedPrice * pezziCollo;
+            
+            card.querySelector('.unit-price').textContent = `${adjustedPrice.toFixed(2)} € cad.`;
+            card.querySelector('.product-total').textContent = `${productTotal.toFixed(2)} €`;
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+            let total = 0;
+            
+            quantityInputs.forEach((input, index) => {
+                const quantity = parseInt(input.value) || 0;
+                const card = input.closest('.product-card');
+                const selectedColor = card.querySelector('.color-select').value;
+                const selectedPlastificazione = card.querySelector('.plastificazione-select').value;
+                const adjustedPrice = getAdjustedPrice(products[index].basePrice, selectedColor, selectedPlastificazione);
+                const pezziCollo = getPezziColloNumber(products[index].pezziCollo);
+                total += quantity * adjustedPrice * pezziCollo;
+            });
+            
+            document.querySelectorAll('.order-button-total').forEach(el => {
+                el.textContent = `€${total.toFixed(2)}`;
+            });
+            updateOrderButton();
+        }
+
+        function updateOrderButton() {
+            const orderButtons = document.querySelectorAll('#orderButton, #orderButtonBottom');
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+            const hasItems = Array.from(quantityInputs).some(input => parseInt(input.value) > 0);
+            orderButtons.forEach(button => button.disabled = !hasItems);
+        }
+
+        async function sendOrder() {
+            const orderItems = [];
+            let total = 0;
+
+            document.querySelectorAll('.product-card').forEach((card, index) => {
+                const quantity = parseInt(card.querySelector('.quantity-input').value);
+                if (quantity > 0) {
+                    const name = products[index].name;
+                    const color = card.querySelector('.color-select').value;
+                    const plastificazioneValue = card.querySelector('.plastificazione-select').value;
+                    const adjustedPrice = getAdjustedPrice(products[index].basePrice, color, plastificazioneValue);
+                    const pezziCollo = getPezziColloNumber(products[index].pezziCollo);
+                    const itemTotal = quantity * adjustedPrice * pezziCollo;
+                    total += itemTotal;
+                    
+                    orderItems.push(
+                        `${name} | ${color} ${plastificazioneValue} | ${quantity}x${pezziCollo}pz | €${adjustedPrice.toFixed(2)} cad. | TOT: €${itemTotal.toFixed(2)}`
+                    );
+                }
+            });
+
+            const message = `
+🛍️ NUOVO ORDINE
+📅 Data: ${new Date().toLocaleString('it-IT')}
+🏪 Negozio: ${shopName}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 DETTAGLI ORDINE:
+
+${orderItems.map((item, i) => `${i + 1}. ${item}`).join('\n\n')}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 TOTALE ORDINE: €${total.toFixed(2)}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            `.trim();
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        access_key: WEB3FORMS_ACCESS_KEY,
+                        subject: `🛍️ Nuovo Ordine da ${shopName} - ${new Date().toLocaleDateString('it-IT')}`,
+                        from_name: `${shopName} - Marvin Packaging`,
+                        replyto: RECIPIENT_EMAIL,
+                        message: message,
+                        botcheck: false
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert('✓ Ordine inviato con successo!', 'success');
+                    setTimeout(() => resetAll(), 2000);
+                } else {
+                    throw new Error(result.message || 'Errore sconosciuto');
+                }
+                
+            } catch (error) {
+                console.error('Errore:', error);
+                showAlert('✗ Errore nell\'invio. Riprova più tardi.', 'error');
+            }
+        }
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            card.innerHTML = `
+                <div class="product-name">
+                    <span class="format-label">Formato</span>
+                    <span>${product.name}</span>
+                </div>
+                <div class="product-controls">
+                    <select class="color-select">
+                        ${colors.map(color => `<option value="${color}">${color}</option>`).join('')}
+                    </select>
+                    <select class="plastificazione-select">
+                        ${plastificazione.map(p => `<option value="${p}">${p}</option>`).join('')}
+                    </select>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus-btn">-</button>
+                        <input type="number" min="0" value="0" class="quantity-input">
+                        <button class="quantity-btn plus-btn">+</button>
+                    </div>
+                    <div class="product-price-container">
+                        <span class="pezzi-collo">${product.pezziCollo}</span>
+                        <span class="unit-price">${product.basePrice.toFixed(2)} € cad.</span>
+                        <span class="product-total">0.00 €</span>
+                    </div>
+                </div>
+            `;
+            
+            const quantityInput = card.querySelector('.quantity-input');
+            const minusBtn = card.querySelector('.minus-btn');
+            const plusBtn = card.querySelector('.plus-btn');
+            
+            minusBtn.addEventListener('click', () => {
+                const val = parseInt(quantityInput.value) || 0;
+                if (val > 0) {
+                    quantityInput.value = val - 1;
+                    updateProductTotal(quantityInput, product);
+                }
+            });
+            
+            plusBtn.addEventListener('click', () => {
+                quantityInput.value = (parseInt(quantityInput.value) || 0) + 1;
+                updateProductTotal(quantityInput, product);
+            });
+            
+            quantityInput.addEventListener('input', () => {
+                if (parseInt(quantityInput.value) < 0) quantityInput.value = 0;
+                updateProductTotal(quantityInput, product);
+            });
+
+            card.querySelector('.color-select').addEventListener('change', () => 
+                updateProductTotal(quantityInput, product));
+            card.querySelector('.plastificazione-select').addEventListener('change', () => 
+                updateProductTotal(quantityInput, product));
+            
+            return card;
+        }
+
+        function resetAll() {
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.querySelector('.quantity-input').value = 0;
+                card.querySelector('.color-select').selectedIndex = 0;
+                card.querySelector('.plastificazione-select').selectedIndex = 0;
+                card.querySelector('.product-total').textContent = '0.00 €';
+            });
+            calculateTotal();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mostra nome negozio
+            document.getElementById('shopNameDisplay').textContent = shopName;
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                if (confirm('Sei sicuro di voler uscire?')) {
+                    sessionStorage.clear();
+                    window.location.href = 'login.html';
+                }
+            });
+
+            const productList = document.getElementById('productList');
+            products.forEach(product => {
+                productList.appendChild(createProductCard(product));
+            });
+
+            calculateTotal();
+
+            document.querySelectorAll('#orderButton, #orderButtonBottom').forEach(button => {
+                button.addEventListener('click', async function() {
+                    const originalHTML = this.innerHTML;
+                    this.innerHTML = 'Invio in corso...';
+                    this.disabled = true;
+
+                    await sendOrder();
+
+                    setTimeout(() => {
+                        this.innerHTML = originalHTML;
+                        updateOrderButton();
+                    }, 2000);
+                });
+            });
+
+            document.querySelectorAll('#resetButton, #resetButtonBottom').forEach(button => {
+                button.addEventListener('click', resetAll);
+            });
+        });
+    </script>
+</body>
+</html>

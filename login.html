@@ -225,7 +225,7 @@
                         autocomplete="current-password"
                         required
                     >
-                    <span class="toggle-icon" id="togglePassword">👁️</span>
+                    <span class="toggle-icon" id="togglePassword">🔓</span>
                 </div>
             </div>
             
@@ -263,7 +263,7 @@
         togglePassword.addEventListener('click', () => {
             const type = passwordInput.type === 'password' ? 'text' : 'password';
             passwordInput.type = type;
-            togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+            togglePassword.textContent = type === 'password' ? '🔓' : '🔒';
         });
 
         // Rimuovi errore quando l'utente digita

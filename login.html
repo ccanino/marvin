@@ -244,7 +244,8 @@
         const CREDENTIALS = {
             'Negozio Roma': 'R0m@2024!Secure',
             'Shop Milano': 'M1l@n0#2024!',
-            'Store Napoli': 'N@p0li$2024!'
+            'Store Napoli': 'N@p0li$2024!',
+            'Negozio Test': 'Test'
         };
 
         const loginForm = document.getElementById('loginForm');
@@ -253,7 +254,7 @@
         const errorMessage = document.getElementById('errorMessage');
         const loginButton = document.getElementById('loginButton');
         const togglePassword = document.getElementById('togglePassword');
-        
+
         // Toggle visualizzazione password
         togglePassword.addEventListener('click', () => {
             const type = passwordInput.type === 'password' ? 'text' : 'password';

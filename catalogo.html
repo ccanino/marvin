@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Prodotti</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --primary-color: #10b981;
             --primary-hover: #059669;
@@ -25,6 +31,16 @@
             background-color: var(--background-color);
             color: var(--text-primary);
             line-height: 1.5;
+        }
+
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-shrink: 0;
+            gap: 15px;
         }
 
         .product-list {
@@ -194,17 +210,18 @@
         }
 
         .logo-container {
-            text-align: center;
-            margin-bottom: 24px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
+            flex: 0 1 auto;
+            min-width: 0;
         }
 
         .logo {
-            width: 25%;
-            max-width: 250px;
+            width: 100%;
+            max-width: 200px;
             height: auto;
+            display: block;
         }
 
         .user-info {
@@ -219,23 +236,32 @@
             font-weight: 500;
         }
 
-        .logout-btn {
+        .reserved-area-btn {
             background-color: #000000;
-            border: none;
             color: white;
             padding: 8px 16px;
             border-radius: 6px;
+            text-decoration: none;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.85em;
             font-weight: 500;
-            transition: all 0.2s;
+            border: none;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            font-family: 'Arial', sans-serif;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .logout-btn:hover {
+        .reserved-area-btn:hover {
             background-color: #333333;
             transform: scale(1.03);
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .reserved-area-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .buttons-container {
@@ -295,16 +321,22 @@
         }
 
         @media (max-width: 640px) {
-            .logo { width: 35%; }
-            
-            .logo-container {
-                flex-direction: column;
-                gap: 12px;
+            .header {
+                padding: 15px 0;
+                gap: 10px;
+            }
+
+            .reserved-area-btn {
+                padding: 7px 12px;
+                font-size: 0.75em;
+            }
+
+            .logo {
+                max-width: 140px;
             }
 
             .user-info {
-                width: 100%;
-                justify-content: center;
+                gap: 8px;
             }
 
             .shop-name {
@@ -313,15 +345,22 @@
         }
 
         @media (max-width: 380px) {
-            .logo { width: 45%; }
-            
+            .header {
+                padding: 12px 0;
+                gap: 8px;
+            }
+
             .shop-name {
                 font-size: 0.8rem;
             }
 
-            .logout-btn {
+            .reserved-area-btn {
                 padding: 6px 12px;
-                font-size: 0.8rem;
+                font-size: 0.7em;
+            }
+
+            .logo {
+                max-width: 120px;
             }
 
             .product-controls {
@@ -354,16 +393,17 @@
                 padding-top: 8px;
                 border-top: 1px solid var(--border-color);
             }
-            .logo { width: 45%; }
         }
     </style>
 </head>
 <body>
-    <div class="logo-container">
-        <img src="logo.png" alt="Marvin Packaging" class="logo">
+    <div class="header">
+        <div class="logo-container">
+            <img src="logo.png" alt="Marvin Packaging" class="logo">
+        </div>
         <div class="user-info">
             <span class="shop-name" id="shopNameDisplay"></span>
-            <button class="logout-btn" id="logoutBtn">Esci</button>
+            <button class="reserved-area-btn" id="logoutBtn">Esci</button>
         </div>
     </div>
 
